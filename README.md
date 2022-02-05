@@ -3,7 +3,7 @@
 ## Introduction
 
 * Name: cyberslot
-* Activities: CS, Philosophy, QMs, Psychology
+* Activities: CS, Philosophy, QMs, Psychology, Neuroscience
 
 ## Getting started
 
