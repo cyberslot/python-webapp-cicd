@@ -9,12 +9,11 @@
 
 run_tests:
   stage: test
-  # image: python:3.9-slim-buster
-  image: python:3.11-slim-buster
+  image: python:3.9-slim-buster
+  # image: python:3.11-slim-buster
   before_script:
     # - apt-get update && apt-get install make
     - apt update && apt install make
-    - pip install --upgrade pip
   script:
     - make test
 
