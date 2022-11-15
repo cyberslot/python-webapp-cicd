@@ -14,6 +14,7 @@ run_tests:
   before_script:
     # - apt-get update && apt-get install make
     - apt update && apt install make
+    - pip install --upgrade pip
   script:
     - make test
 
