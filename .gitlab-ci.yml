@@ -5,7 +5,7 @@ variables:
 stages:
   - test
   - build
-#   - deploy
+  - deploy
 
 run_tests:
   stage: test
