@@ -34,6 +34,7 @@ build_image:
 
 deploy:
   stage: deploy
+  # image: ruby:alpine3.16
   before_script:
     - chmod 400 $SSH_KEY
   script:
