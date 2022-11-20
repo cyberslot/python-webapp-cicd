@@ -16,6 +16,9 @@ run_tests:
     - apt update && apt install make
   script:
     - make test
+  artifacts:
+    paths:
+      - "./script.sh"
 
 build_image:
   stage: build
@@ -31,9 +34,6 @@ build_image:
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push $IMAGE_NAME:$IMAGE_TAG
-  artifacts:
-    paths:
-      - "./script.sh"
 
 deploy:
   stage: deploy
