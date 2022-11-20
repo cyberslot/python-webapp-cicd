@@ -18,7 +18,7 @@ run_tests:
     - make test
   artifacts:
     paths:
-      - "./script.sh"
+      - "app/script.sh"
 
 build_image:
   stage: build
