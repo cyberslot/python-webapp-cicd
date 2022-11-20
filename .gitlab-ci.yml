@@ -36,14 +36,14 @@ deploy:
   stage: deploy
   # image: ruby:alpine3.16
   before_script:
-    - cat << EOF > script.sh
-      if [ "$(docker ps -q)" != "" ]; then
-        docker stop $(docker ps -q) && docker rm $(docker ps -aq)
-      else
-        docker run -d -p 5000:5000 $IMAGE_NAME:$IMAGE_TAG
-      fi
-      EOF
-    - chmod u+x ./script.sh
+    # - cat << EOF > script.sh
+    #   if [ "$(docker ps -q)" != "" ]; then
+    #     docker stop $(docker ps -q) && docker rm $(docker ps -aq)
+    #   else
+    #     docker run -d -p 5000:5000 $IMAGE_NAME:$IMAGE_TAG
+    #   fi
+    #   EOF
+    # - chmod u+x ./script.sh
     - chmod 400 $SSH_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@10.133.108.111 "
