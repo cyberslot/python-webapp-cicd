@@ -12,7 +12,6 @@ run_tests:
   image: python:3.9-slim-buster
   # image: python:3.11-slim-buster
   before_script:
-    # - apt-get update && apt-get install make
     - apt update && apt install make
   script:
     - make test
@@ -22,10 +21,8 @@ run_tests:
 
 build_image:
   stage: build
-  # image: docker:20.10.16
   image: docker:20.10.21
   services:
-    # - docker:20.10.16-dind
     - docker:20.10.21-dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
@@ -39,14 +36,6 @@ deploy:
   stage: deploy
   # image: ruby:alpine3.16
   before_script:
-    # - cat << EOF > script.sh
-    #   if [ "$(docker ps -q)" != "" ]; then
-    #     docker stop $(docker ps -q) && docker rm $(docker ps -aq)
-    #   else
-    #     docker run -d -p 5000:5000 $IMAGE_NAME:$IMAGE_TAG
-    #   fi
-    #   EOF
-    # - chmod 700 $script
     - chmod 400 $SSH_KEY
   script:
     - scp -o StrictHostKeyChecking=no -i $SSH_KEY src/script.sh root@10.133.108.111:/root
@@ -54,7 +43,6 @@ deploy:
         docker login -u $REGISTRY_USER -p $REGITSRY_PASS &&
         chmod 700 script.sh && 
         . script.sh"
-        # docker run -d -p 5000:5000 $IMAGE_NAME:$IMAGE_TAG"
         
         
 
