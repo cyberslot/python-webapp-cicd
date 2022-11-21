@@ -1,6 +1,6 @@
-# variables:
-#   IMAGE_NAME: cyberslot/app-repo
-#   IMAGE_TAG: python-app-1.0
+variables:
+  IMAGE_NAME: cyberslot/app-repo
+  IMAGE_TAG: python-app-1.0
 
 stages:
   - test
