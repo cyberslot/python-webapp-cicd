@@ -8,8 +8,8 @@ spec:
       image: gcr.io/kaniko-project/executor:debug
       args:
         [
-          "--dockerfile=/workspace/Dockerfile",
-          "--context=dir://workspace",
+          "--dockerfile=Dockerfile",
+          "--context=dir://",
           "--destination=cyberslot/app-repo:python-app-1.0",
         ]
       volumeMounts:
