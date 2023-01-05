@@ -39,10 +39,6 @@ deploy:
   script:
     - scp -o StrictHostKeyChecking=no -i $SSH_KEY src/script.sh root@10.133.108.111:/root
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@10.133.108.111 "
-        docker login -u $REGISTRY_USER -p $REGITSRY_PASS &&
-        chmod 700 script.sh && 
-        . script.sh"
-        
-        
-
-        
+      docker login -u $REGISTRY_USER -p $REGITSRY_PASS &&
+      chmod 700 script.sh &&
+      . script.sh"
