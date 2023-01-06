@@ -7,10 +7,10 @@ spec:
   containers:
     - name: kaniko
       image: gcr.io/kaniko-project/executor:debug
-      args:
-        [
-          "--dockerfile=Dockerfile",
-          "--context=dir://cls",
+      args: [
+          # "--dockerfile=Dockerfile",
+          # "--context=dir://",
+          "--context=git://gitlab.com/cyberslot/CI_CD-Crash-Course/",
           "--destination=cyberslot/app-repo:python-app-1.0",
         ]
       volumeMounts:
