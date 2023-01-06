@@ -41,7 +41,7 @@ build_image1:kubectl:
     entrypoint: [""]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd:k8s-agent-cicd
+    - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
     - kubectl get pods
     - kubectl apply -f kubernetes/build/kaniko-dir.yaml
 
