@@ -17,7 +17,10 @@ run_tests:
     - make test
   artifacts:
     paths:
-      - src/script.sh
+      ### Server part
+      # - src/script.sh
+      ### Kubernetes part
+      - Dockerfile
 
 ### Server part
 # build_image:
