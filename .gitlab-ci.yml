@@ -3,7 +3,7 @@ variables:
   IMAGE_TAG: python-app-1.0
 
 stages:
-  # - test
+  - test
   ### Server part
   # - build
   ### Kubernetes part
@@ -11,14 +11,14 @@ stages:
   - build-kaniko
   # - deploy
 
-# run_tests:
-#   stage: test
-#   image: python:3.9-slim-buster
-## image: python:3.12.0a3-slim-bullseye
-# before_script:
-#   - apt update && apt install make
-# script:
-#   - make test
+run_tests:
+  stage: test
+  image: python:3.9-slim-buster
+  ## image: python:3.12.0a3-slim-bullseye
+  before_script:
+    - apt update && apt install make
+  script:
+    - make test
 # artifacts:
 #   paths:
 ### Server part
@@ -67,18 +67,6 @@ build_image-kaniko:
       --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
   # rules:
   #   - if: $CI_COMMIT_TAG
-#   image:
-#     name: docker:20.10.22
-#   services:
-#     - docker:20.10.22-dind
-#   variables:
-#     DOCKER_TLS_CERTDIR: "/certs"
-#   before_script:
-#     - docker login -u $REGISTRY_USER -p $REGITSRY_PASS
-#   script:
-#     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
-#     - docker push $IMAGE_NAME:$IMAGE_TAG
-
 # deploy:
 #   stage: deploy
 
