@@ -4,10 +4,10 @@ variables:
 
 stages:
   - test
-  - build
+  # - build
   ### Kubernetes part
-  # - build-kubectl
-  # - build-kaniko
+  - build-kubectl
+  - build-app
   # - deploy
 
 run_tests:
@@ -37,22 +37,22 @@ run_tests:
 #     - docker push $IMAGE_NAME:$IMAGE_TAG
 
 ### Kubernetes part
-# build_image-kctl:
-#   stage: build-kubectl
-#   image:
-#     name: bitnami/kubectl:latest
-#     entrypoint: [""]
-#   script:
-#     - kubectl config get-contexts
-#     - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
-#     - kubectl get pods
+build_image-kctl:
+  stage: build-kubectl
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
+    - kubectl get pods
 # ------ Experimental ------- #
 # - kubectl create secret docker-registry regcred -n gitlab-runner --docker-server=https://index.docker.io/v1/ --docker-username=cyberslot --docker-password=71fb7615-551a-4697-a3b4-e7ca2b70f163 --docker-email=cyberslot@gmail.com
 # ------------------------ #
 # - kubectl apply -f kubernetes/build/kaniko-dir.yaml
 
-build_image:
-  stage: build
+build_image-app:
+  stage: build-app
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
     entrypoint: [""]
