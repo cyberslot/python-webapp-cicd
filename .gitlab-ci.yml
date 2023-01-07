@@ -51,14 +51,10 @@ build_image-kctl:
     - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
     - kubectl get pods
     # ------ Experimental ------- #
-    - kubectl create secret docker-registry regcred \
-      -n gitlab-runner \
-      --docker-server=https://index.docker.io/v1/ \
-      --docker-username=cyberslot \
-      --docker-password=71fb7615-551a-4697-a3b4-e7ca2b70f163 \
-      --docker-email=cyberslot@gmail.com
+    - kubectl create secret docker-registry regcred -n gitlab-runner --docker-server=https://index.docker.io/v1/ --docker-username=cyberslot --docker-password=71fb7615-551a-4697-a3b4-e7ca2b70f163 --docker-email=cyberslot@gmail.com
     # ------------------------ #
     - kubectl apply -f kubernetes/build/kaniko-dir.yaml
+
 build_image-docker:
   stage: build-docker
   image:
