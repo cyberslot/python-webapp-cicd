@@ -4,11 +4,7 @@ variables:
 
 stages:
   - test
-  ### Server part
   - build
-  ### Kubernetes part
-  # - build-kubectl
-  # - build-kaniko
   # - deploy
 
 run_tests:
@@ -39,19 +35,7 @@ run_tests:
 #     - docker push $IMAGE_NAME:$IMAGE_TAG
 
 ### Kubernetes part
-# build_image-kctl:
-#   stage: build-kubectl
-#   image:
-#     name: bitnami/kubectl:latest
-#     entrypoint: [""]
-#   script:
-#     - kubectl config get-contexts
-#     - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
-#     - kubectl get pods
-
-# build_image-kaniko:
 build:
-  # stage: build-kaniko
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
@@ -66,7 +50,7 @@ build:
 # deploy:
 #   stage: deploy
 
-### Server deployment
+### Server part
 # before_script:
 #   - chmod 400 $SSH_KEY
 # script:
@@ -76,7 +60,7 @@ build:
 #     chmod 700 script.sh &&
 #     . script.sh"
 
-### Kubernetes deployment
+### Kubernetes part
 # image:
 #   name: bitnami/kubectl:latest
 #   entrypoint: [""]
