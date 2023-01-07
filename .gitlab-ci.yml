@@ -4,11 +4,10 @@ variables:
 
 stages:
   # - test
-  - build-kubectl
-  - build
+  # - build
   ### Kubernetes part
-
-  # - build-app
+  - build-kubectl
+  - build-kaniko
   # - deploy
 
 # run_tests:
@@ -52,8 +51,8 @@ build_image-kctl:
 # ------------------------ #
 # - kubectl apply -f kubernetes/build/kaniko-dir.yaml
 
-build:
-  stage: build
+build_image-kaniko:
+  stage: build-kaniko
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
     entrypoint: [""]
