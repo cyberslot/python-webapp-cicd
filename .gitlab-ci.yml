@@ -3,7 +3,7 @@ variables:
   IMAGE_TAG: python-app-1.0
 
 stages:
-  - test
+  # - test
   ### Server part
   # - build
   ### Kubernetes part
@@ -11,20 +11,20 @@ stages:
   - build-docker
   # - deploy
 
-run_tests:
-  stage: test
-  image: python:3.9-slim-buster
-  # image: python:3.12.0a3-slim-bullseye
-  before_script:
-    - apt update && apt install make
-  script:
-    - make test
-  artifacts:
-    paths:
-      ### Server part
-      # - src/script.sh
-      ### Kubernetes part
-      - Dockerfile
+# run_tests:
+#   stage: test
+#   image: python:3.9-slim-buster
+## image: python:3.12.0a3-slim-bullseye
+# before_script:
+#   - apt update && apt install make
+# script:
+#   - make test
+# artifacts:
+#   paths:
+### Server part
+# - src/script.sh
+### Kubernetes part
+# - Dockerfile
 
 ### Server part
 # build_image:

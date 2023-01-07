@@ -9,13 +9,14 @@ spec:
       image: gcr.io/kaniko-project/executor:latest
       args:
         [
-          "--dockerfile=builds/cyberslot/CI_CD-Crash-Course/Dockerfile",
-          "--context=dir://builds/cyberslot/CI_CD-Crash-Course",
+          "--dockerfile=Dockerfile",
+          "--context=dir:///workspace/",
           "--destination=cyberslot/app-repo:python-app-1.0",
         ]
       volumeMounts:
         - name: kaniko-secret
-          mountPath: /kaniko/.docker
+          # mountPath: /kaniko/.docker
+          mountPath: /workspace/
   restartPolicy: Never
   volumes:
     - name: kaniko-secret
