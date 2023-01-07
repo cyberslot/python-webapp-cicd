@@ -9,7 +9,7 @@ spec:
       image: gcr.io/kaniko-project/executor:latest
       args:
         [
-          "--dockerfile=Dockerfile",
+          "--dockerfile=builds/cyberslot/CI_CD-Crash-Course/Dockerfile",
           "--context=dir://builds/cyberslot/CI_CD-Crash-Course",
           "--destination=cyberslot/app-repo:python-app-1.0",
         ]
