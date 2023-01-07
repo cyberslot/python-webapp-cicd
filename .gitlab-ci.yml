@@ -4,7 +4,6 @@ variables:
 
 stages:
   - test
-  ### Server part
   - build
   ### Kubernetes part
   # - build-kubectl
@@ -14,16 +13,15 @@ stages:
 run_tests:
   stage: test
   image: python:3.9-slim-buster
-# image: python:3.12.0a3-slim-bullseye
-before_script:
-  - apt update && apt install make
-script:
-  - make test
+  # image: python:3.12.0a3-slim-bullseye
+  before_script:
+    - apt update && apt install make
+  script:
+    - make test
 ### Server part
 # artifacts:
 #   paths:
-# - src/script.sh
-
+#     - src/script.sh
 ### Server part
 # build_image:
 #   stage: build
@@ -54,7 +52,6 @@ script:
 # - kubectl apply -f kubernetes/build/kaniko-dir.yaml
 
 build_image:
-  # stage: build-kaniko
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
