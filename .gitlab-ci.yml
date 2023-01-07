@@ -4,9 +4,10 @@ variables:
 
 stages:
   - test
+  - build-kubectl
   - build
   ### Kubernetes part
-  - build-kubectl
+
   # - build-app
   # - deploy
 
