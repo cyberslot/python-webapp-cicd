@@ -5,9 +5,10 @@ variables:
 stages:
   - test
   - build
+  - publish
   - deploy
 
-run_tests:
+.run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
@@ -35,7 +36,8 @@ run_tests:
 #     - docker push $IMAGE_NAME:$IMAGE_TAG
 
 ### Kubernetes part
-build:
+### - Kaniko build
+.build:
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
@@ -45,11 +47,20 @@ build:
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
-  rules:
-    - if: $CI_COMMIT_TAG
+  ## -- If active, prevents the stage from implementation! -- ##
+  ## rules:
+  ##   - if: $CI_COMMIT_TAG
+  ## -------------------------------------------------------- ##
+### - Helm chart
+publish:
+  stage: publish
+  image: curlimages/curl:latest
+  script:
+    - 'curl --request POST --user gitlab-ci-token:$CI_JOB_TOKEN --form "chart=@kubernetes/deploy/webapp-1.4.3.tgz" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts"'
 
-deploy:
+.deploy:
   stage: deploy
+
   ### Server part
   # before_script:
   #   - chmod 400 $SSH_KEY
@@ -61,12 +72,18 @@ deploy:
   #     . script.sh"
 
   ### Kubernetes part
+  ### - Manifests
+  # image:
+  #   name: bitnami/kubectl:latest
+  #   entrypoint: [""]
+  # script:
+  #   - kubectl config get-contexts
+  #   - kubectl config use-context cyberslot/ci_cd-crash-course/repository:k8s-agent-cicd
+  #   - kubectl get pods
+  ### - Helm chart
+  image: alpine/helm:3.10.2
   script:
-    - helm version
-# image:
-#   name: bitnami/kubectl:latest
-#   entrypoint: [""]
-# script:
-#   - kubectl config get-contexts
-#   - kubectl config use-context cyberslot/ci_cd-crash-course/repository:k8s-agent-cicd
-#   - kubectl get pods
+    - helm upgrade ${APP_NAME} ./charts --install --values=./charts/values.yaml --namespace ${APP_NAME}
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+      when: always

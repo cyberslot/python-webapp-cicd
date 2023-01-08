@@ -3,6 +3,7 @@
 
 image:
   # -- Image registry and repo
+  # repository: docker.io/nginx
   repository: docker.io/nginx
   # -- Pull policy
   pullPolicy: IfNotPresent
@@ -25,22 +26,25 @@ secretEnv: {}
 # Network traffic to the pods
 service:
   # -- Service type, change to LoadBalancer or NodePort to expose traffic outside the cluster
-  type: ClusterIP
+  # type: ClusterIP
+  type: LoadBalancer
   # -- Port the service accepts traffic on
   port: 80
   # -- Port the container accepts traffic on
-  targetPort: 8080
+  # targetPort: 8080
+  targetPort: 5000
   # -- Service annotations
   annotations: {}
 
 # Configure Ingress, switch on/off-able
 ingress:
   # -- Use an ingress or not
-  enabled: false
+  # enabled: false
+  enabled: true
   # -- Set the IngressClass to use
   className:
   # -- Ingress host *must* be set if enabled
-  host:
+  host: nginxingr-metallb-control-plane
   tls:
     # -- Use TLS on ingress
     enabled: false
