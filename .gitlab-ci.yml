@@ -5,7 +5,7 @@ variables:
 stages:
   - test
   - build
-  # - deploy
+  - deploy
 
 run_tests:
   stage: test
@@ -45,22 +45,24 @@ build:
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
-  # rules:
-  #   - if: $CI_COMMIT_TAG
-# deploy:
-#   stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG
 
-### Server part
-# before_script:
-#   - chmod 400 $SSH_KEY
-# script:
-#   - scp -o StrictHostKeyChecking=no -i $SSH_KEY src/script.sh root@10.133.108.111:/root
-#   - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@10.133.108.111 "
-#     docker login -u $REGISTRY_USER -p $REGITSRY_PASS &&
-#     chmod 700 script.sh &&
-#     . script.sh"
+deploy:
+  stage: deploy
+  ### Server part
+  # before_script:
+  #   - chmod 400 $SSH_KEY
+  # script:
+  #   - scp -o StrictHostKeyChecking=no -i $SSH_KEY src/script.sh root@10.133.108.111:/root
+  #   - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@10.133.108.111 "
+  #     docker login -u $REGISTRY_USER -p $REGITSRY_PASS &&
+  #     chmod 700 script.sh &&
+  #     . script.sh"
 
-### Kubernetes part
+  ### Kubernetes part
+  script:
+    - helm version
 # image:
 #   name: bitnami/kubectl:latest
 #   entrypoint: [""]
