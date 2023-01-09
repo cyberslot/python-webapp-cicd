@@ -104,4 +104,5 @@ deploy:
     # - helm install webapp ci_cd-crash-course/webapp
 
     - helm repo add benc-uk https://benc-uk.github.io/helm-charts
-    - helm install demo benc-uk/webapp --values myapp.yaml
+    - helm repo update benc-uk
+    - helm install demo benc-uk/webapp # --values myapp.yaml
