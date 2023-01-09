@@ -103,8 +103,11 @@ deploy:
     # - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     # - helm install webapp ci_cd-crash-course/webapp
 
-    - pwd
-    - ls -la
+    ## --------- EXPERIMENTAL --------- ##
+    - ls -la /builds/cyberslot/CI_CD-Crash-Course.tmp/
+    # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
     - helm repo add benc-uk https://benc-uk.github.io/helm-charts
     - helm repo update benc-uk
-    - helm un demo benc-uk/webapp # --values myapp.yaml
+    - helm repo list
+    - help search repo benc-uk
+    # - helm install demo benc-uk/webapp
