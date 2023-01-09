@@ -5,6 +5,7 @@ variables:
 stages:
   - test
   - build
+  - helm-package
   - publish
   - deploy
 
@@ -50,15 +51,22 @@ stages:
   ## -- If active, prevents the stage from implementation! -- ##
   ## rules:
   ##   - if: $CI_COMMIT_TAG
-  ## -------------------------------------------------------- ##
+  ## --------------------------------------------- ##
 ### - Helm chart
+package:
+  stage: helm-package
+  image: alpine/helm:3.10.2
+  script:
+    - cd kubernetes/deploy/helm-chart
+    - helm package .
+
 publish:
   stage: publish
   image: curlimages/curl:latest
   script:
     - 'curl --request POST --user gitlab-ci-token:$CI_JOB_TOKEN --form "chart=@kubernetes/deploy/webapp-1.4.3.tgz" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts"'
 
-.deploy:
+deploy:
   stage: deploy
 
   ### Server part
@@ -72,7 +80,7 @@ publish:
   #     . script.sh"
 
   ### Kubernetes part
-  ### - Manifests
+  ### - Manifests (NOT CONFIRUED!)
   # image:
   #   name: bitnami/kubectl:latest
   #   entrypoint: [""]
@@ -80,10 +88,17 @@ publish:
   #   - kubectl config get-contexts
   #   - kubectl config use-context cyberslot/ci_cd-crash-course/repository:k8s-agent-cicd
   #   - kubectl get pods
-  ### - Helm chart
+
+  ### - Helm chart from Project Repo
   image: alpine/helm:3.10.2
   script:
-    - helm upgrade ${APP_NAME} ./charts --install --values=./charts/values.yaml --namespace ${APP_NAME}
+    - helm upgrade webapp ./kubernetes/deploy/helm-chart/ --install --set-string image.tag=${CI_COMMIT_TAG} --namespace webapp --timeout 30m0s
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
       when: always
+
+  ### - Helm package (chart) from Package Registry
+  # image: alpine/helm:3.10.2
+  # script:
+  #   - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
+  #   - helm install webapp ci_cd-crash-course/webapp

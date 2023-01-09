@@ -4,7 +4,9 @@
 image:
   # -- Image registry and repo
   # repository: docker.io/nginx
-  repository: docker.io/nginx
+
+  repository: registry.gitlab.com/cyberslot/ci_cd-crash-course
+
   # -- Pull policy
   pullPolicy: IfNotPresent
   # -- Tag of image to use
