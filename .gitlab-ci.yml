@@ -104,10 +104,9 @@ deploy:
     # - helm install webapp ci_cd-crash-course/webapp
 
     ## --------- EXPERIMENTAL --------- ##
-    - ls -la /builds/cyberslot/CI_CD-Crash-Course.tmp/
-    # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
+    - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
     - helm repo add benc-uk https://benc-uk.github.io/helm-charts
     - helm repo update benc-uk
     - helm repo list
-    - help search repo benc-uk
+    - helm search repo benc-uk
     # - helm install demo benc-uk/webapp
