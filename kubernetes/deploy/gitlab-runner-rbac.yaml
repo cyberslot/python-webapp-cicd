@@ -18,7 +18,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: default
-    namespace: kube-system
+    namespace: gitlab-runner
 roleRef:
   kind: ClusterRole
   name: secret-reader
