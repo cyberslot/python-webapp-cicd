@@ -101,8 +101,12 @@ deploy:
   image: alpine/helm:3.10.2
   script:
     - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
+    - helm un webapp
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
-    - helm install webapp -n webapp ci_cd-crash-course/webapp
+    - helm repo update ci_cd-crash-cours
+    - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
+    # - helm install webapp -n webapp --dry-run ci_cd-crash-course/webapp
+    # - helm upgrade --debug webapp --namespace webapp --dry-run ci_cd-crash-course/webapp
 
     ## --------- EXPERIMENTAL --------- ##
     # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
