@@ -105,8 +105,7 @@ deploy:
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
     # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
-    - for OBJ in service/webapp
-      do
+    - for OBJ in service/webapp do
       kubectl annotate $OBJ meta.helm.sh/release-namespace=webapp
       kubectl annotate $OBJ meta.helm.sh/release-name=webapp
       done
