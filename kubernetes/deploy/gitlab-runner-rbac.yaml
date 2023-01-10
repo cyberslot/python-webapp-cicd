@@ -5,18 +5,20 @@ metadata:
   name: secret-reader
 rules:
   - apiGroups: [""]
-    resources:
-      [
+    resources: [
         "pods",
         "secrets",
         "services",
-        "deployments",
+        # "deployments",
         "clusterroles",
         "clusterrolebindings",
       ]
     verbs: ["get", "watch", "list"]
   - apiGroups: ["apps"]
     resources: ["deployments"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
     verbs: ["get", "watch", "list"]
 
 ---
