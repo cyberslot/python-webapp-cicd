@@ -1,0 +1,17 @@
+apiVersion: v2
+appVersion: 1.0.0
+description:
+  A generic chart for deploying almost any simple web app or RESTful microservice
+  as a deployment, and exposing HTTP(S) traffic to it via a range of options, including
+  Ingress or a basic Service
+# home: https://github.com/benc-uk/helm-charts
+icon: https://raw.githubusercontent.com/benc-uk/helm-charts/master/webapp/icon.png
+# maintainers:
+#   - email: benc.uk@gmail.com
+#     name: Ben Coleman
+#     url: https://github.com/benc-uk/helm-charts
+name: webapp
+# sources:
+#   - https://github.com/benc-uk/helm-charts
+type: application
+version: 1.0.0
