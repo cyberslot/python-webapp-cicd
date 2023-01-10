@@ -7,7 +7,7 @@ rules:
   - apiGroups: [""]
     # at the HTTP level, the name of the resource for accessing Secret
     # objects is "secrets"
-    resources: ["secrets", "clusterroles", "clusterrolebindings"]
+    resources: ["secrets", "services", "clusterroles", "clusterrolebindings"]
     verbs: ["get", "watch", "list"]
 
 ---
