@@ -93,9 +93,9 @@ serviceAccount:
   name:
 
 ## ----- EXPERIMENTAL ----- ##
-rbac:
-  create: false
-  serviceAccountName: "sa-runner"
+# rbac:
+#   create: false
+#   serviceAccountName: "sa-runner"
 ## ------------------------ ##
 
 persistence:
