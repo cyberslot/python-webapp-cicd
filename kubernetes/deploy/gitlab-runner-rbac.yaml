@@ -14,7 +14,10 @@ rules:
     resources: ["ingresses"]
     verbs: ["get", "watch", "list"]
   - apiGroups: ["rbac.authorization.k8s.io"]
-    resources: ["clusterroles", "clusterrolebindings"]
+    resources: ["clusterroles"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterrolebindings"]
     verbs: ["get", "watch", "list"]
 
 ---
