@@ -28,8 +28,8 @@ secretEnv: {}
 # Network traffic to the pods
 service:
   # -- Service type, change to LoadBalancer or NodePort to expose traffic outside the cluster
-  # type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP
+  # type: LoadBalancer
   # -- Port the service accepts traffic on
   port: 80
   # -- Port the container accepts traffic on
