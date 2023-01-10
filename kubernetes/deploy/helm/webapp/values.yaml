@@ -36,8 +36,9 @@ service:
   # targetPort: 8080
   targetPort: 5000
   # -- Service annotations
-  annotations: {}
-
+  annotations: # {}
+    "meta.helm.sh/release-namespace": webapp
+    "meta.helm.sh/release-name": webapp
 # Configure Ingress, switch on/off-able
 ingress:
   # -- Use an ingress or not
