@@ -116,7 +116,7 @@ deploy:
     # - helm install webapp -n webapp ci_cd-crash-course/webapp
     # - helm ls -a
     # - helm un webapp
-    - helm upgrade webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
+    - helm upgrade --install webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
 
 
     ## --------- EXPERIMENTAL --------- ##
