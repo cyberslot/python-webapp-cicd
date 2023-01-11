@@ -113,7 +113,7 @@ deploy:
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
     # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
-    - helm install webapp -n webapp ci_cd-crash-course/webapp
+    # - helm install webapp -n webapp ci_cd-crash-course/webapp
     ## ------ Debug section ------ ##
     # - helm ls -a
     # - helm ls --all-namespaces
@@ -121,9 +121,13 @@ deploy:
     # - helm un -n webapp webapp
     ## --------------------------- ##
     # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
+    - echo $CI_REGISTRY > ${CI_PROJECT_DIR}/kubernetes/data.txt
+    - echo $CI_REGISTRY_IMAGE >> ${CI_PROJECT_DIR}/kubernetes/data.txt
+    - echo $CI_REGISTRY_USER >> ${CI_PROJECT_DIR}/kubernetes/data.txt
+    - echo $CI_REGISTRY_PASSWORD >> ${CI_PROJECT_DIR}/kubernetes/data.txt
+    - echo $GITLAB_USER_EMAIL >> ${CI_PROJECT_DIR}/kubernetes/data.txt
 
     ## --------- EXPERIMENTAL --------- ##
-    # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
     # - helm repo add benc-uk https://benc-uk.github.io/helm-charts
     # - helm repo update benc-uk
     ## - helm repo list

@@ -69,6 +69,14 @@ resources:
     # -- Memory resource request
     memory: 128Mi
 
+## --------- EXPERIMENTAL --------- ##
+imageCredentials:
+  registry: registry.gitlab.com/cyberslot/ci_cd-crash-course
+  username: cyberslot
+  password: iyjBJkxcUv8GhKQUewDj
+  email: cyberslot@gmail.com
+## -------------------------------- ##
+
 # -- Any secrets needed to pull image
 imagePullSecrets: []
 # -- Override the chart name used for this release
@@ -92,11 +100,11 @@ serviceAccount:
   # -- The name of the service account to use. If not set a name is generated
   name:
 
-## ----- EXPERIMENTAL ----- ##
+## --------- EXPERIMENTAL --------- ##
 # rbac:
 #   create: false
 #   serviceAccountName: "sa-runner"
-## ------------------------ ##
+## -------------------------------- ##
 
 persistence:
   # -- Use persistent volume
