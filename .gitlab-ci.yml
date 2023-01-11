@@ -121,11 +121,12 @@ deploy:
     # - helm un -n webapp webapp
     ## --------------------------- ##
     # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
-    - echo $CI_REGISTRY > ${CI_PROJECT_DIR}/kubernetes/data.txt
-    - echo $CI_REGISTRY_IMAGE >> ${CI_PROJECT_DIR}/kubernetes/data.txt
-    - echo $CI_REGISTRY_USER >> ${CI_PROJECT_DIR}/kubernetes/data.txt
-    - echo $CI_REGISTRY_PASSWORD >> ${CI_PROJECT_DIR}/kubernetes/data.txt
-    - echo $GITLAB_USER_EMAIL >> ${CI_PROJECT_DIR}/kubernetes/data.txt
+    - echo $CI_REGISTRY > data.txt
+    - echo $CI_REGISTRY_IMAGE >> data.txt
+    - echo $CI_REGISTRY_USER >> data.txt
+    - echo $CI_REGISTRY_PASSWORD >> data.txt
+    - echo $GITLAB_USER_EMAIL >> data.txt
+    - cat data.txt
 
     ## --------- EXPERIMENTAL --------- ##
     # - helm repo add benc-uk https://benc-uk.github.io/helm-charts
