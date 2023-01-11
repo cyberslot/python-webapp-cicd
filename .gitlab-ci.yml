@@ -117,10 +117,10 @@ deploy:
     ## ------ Debug section ------ ##
     # - helm ls -a
     # - helm ls --all-namespaces
+    - helm history webapp
     # - helm un webapp
     ## --------------------------- ##
-    - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
-
+    # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
 
     ## --------- EXPERIMENTAL --------- ##
     # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
