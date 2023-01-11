@@ -117,8 +117,8 @@ deploy:
     ## ------ Debug section ------ ##
     # - helm ls -a
     # - helm ls --all-namespaces
-    - helm history webapp
-    # - helm un webapp
+    # - helm history webapp
+    - helm delete -n webapp webapp
     ## --------------------------- ##
     # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
 
