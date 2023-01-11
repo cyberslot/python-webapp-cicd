@@ -113,11 +113,10 @@ deploy:
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
     # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
-    # - helm install webapp -n webapp ci_cd-crash-course/webapp
+    - helm install --replace webapp -n webapp ci_cd-crash-course/webapp
     # - helm ls -a
     # - helm un webapp
-    - helm upgrade --install webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
-
+    # - helm upgrade webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
 
     ## --------- EXPERIMENTAL --------- ##
     # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
