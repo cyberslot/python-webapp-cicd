@@ -12,7 +12,7 @@ rules:
     verbs: ["get", "watch", "list", "create"]
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
-    verbs: ["get", "watch", "list"]
+    verbs: ["get", "watch", "list", "create"]
   # - apiGroups: ["rbac.authorization.k8s.io"]
   #   resources: ["clusterroles"]
   #   verbs: ["get", "watch", "list"]
