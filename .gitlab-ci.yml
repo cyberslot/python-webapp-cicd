@@ -54,14 +54,14 @@ stages:
   ##   - if: $CI_COMMIT_TAG
   ## --------------------------------------------- ##
 ### - Helm chart
-.package:
+package:
   stage: helm-package
   image: alpine/helm:3.10.2
   script:
     - cd kubernetes/deploy/helm
     - helm package webapp
 
-.publish:
+publish:
   stage: publish
   image: curlimages/curl:latest
   script:
@@ -113,12 +113,12 @@ deploy:
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
     # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
-    # - helm install webapp -n webapp ci_cd-crash-course/webapp
+    - helm install webapp -n webapp ci_cd-crash-course/webapp
     ## ------ Debug section ------ ##
     # - helm ls -a
     # - helm ls --all-namespaces
     # - helm history webapp
-    - helm un -n webapp webapp
+    # - helm un -n webapp webapp
     ## --------------------------- ##
     # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
 
