@@ -114,9 +114,10 @@ deploy:
     - helm repo up ci_cd-crash-course
     # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
     # - helm install webapp -n webapp ci_cd-crash-course/webapp
-    - helm ls -a
+    # - helm ls -a
     # - helm un webapp
-    # - helm upgrade --debug webapp --namespace webapp --dry-run ci_cd-crash-course/webapp
+    - helm upgrade webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
+
 
     ## --------- EXPERIMENTAL --------- ##
     # - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
