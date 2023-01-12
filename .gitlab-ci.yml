@@ -89,14 +89,16 @@ deploy:
   #     . script.sh"
 
   ### Kubernetes part
-  ### - Manifests (NOT CONFIRUED!)
-  # image:
-  #   name: bitnami/kubectl:latest
-  #   entrypoint: [""]
-  # script:
-  #   - kubectl config get-contexts
-  #   - kubectl config use-context cyberslot/ci_cd-crash-course/repository:k8s-agent-cicd
-  #   - kubectl get pods
+  ### - Manifests (NOT CONFIGURED!)
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context cyberslot/ci_cd-crash-course/repository:k8s-agent-cicd
+    # - kubectl get pods
+    - kubectl create secret docker-registry gl-regcred -n webapp --docker-server=registry.gitlab.com --docker-username=cyberslot --docker-password=$DEPLOY_TOKEN
+    - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
 
   ### - Helm chart from Project Repo
   # image: alpine/helm:3.10.2
@@ -107,24 +109,24 @@ deploy:
   #     when: always
 
   ### - Helm package (chart) from Package Registry
-  image: alpine/helm:3.10.2
-  script:
-    - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
-    - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
-    - helm repo up ci_cd-crash-course
-    # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
-    # - helm install --debug webapp -n webapp ci_cd-crash-course/webapp --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN
-    - helm un -n webapp webapp
-    ## ------ Debug section ------ ##
-    # - helm ls -a
-    # - helm ls --all-namespaces
-    # - helm history webapp
-    ## --------------------------- ##
-    # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade
+  # image: alpine/helm:3.10.2
+  # script:
+  #   - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
+  #   - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
+  #   - helm repo up ci_cd-crash-course
+  # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
+  # - helm install --debug webapp -n webapp ci_cd-crash-course/webapp --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN
+  # - helm un -n webapp webapp
+  ## ------ Debug section ------ ##
+  # - helm ls -a
+  # - helm ls --all-namespaces
+  # - helm history webapp
+  ## --------------------------- ##
+  # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade (NOT TESTED)
 
-    ## --------- EXPERIMENTAL --------- ##
-    # - helm repo add benc-uk https://benc-uk.github.io/helm-charts
-    # - helm repo update benc-uk
-    ## - helm repo list
-    ## - helm search repo benc-uk
-    # - helm install webapp benc-uk/webapp
+  ## --------- EXPERIMENTAL --------- ##
+  # - helm repo add benc-uk https://benc-uk.github.io/helm-charts
+  # - helm repo update benc-uk
+  ## - helm repo list
+  ## - helm search repo benc-uk
+  # - helm install webapp benc-uk/webapp

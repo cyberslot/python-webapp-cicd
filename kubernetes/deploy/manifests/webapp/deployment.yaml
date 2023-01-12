@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app.kubernetes.io/name: webapp
+    app.kubernetes.io/instance: webapp
+  annotations: {}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: webapp
+      app.kubernetes.io/instance: webapp
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        app.kubernetes.io/name: webapp
+        app.kubernetes.io/instance: webapp
+    spec:
+      serviceAccountName: default
+      securityContext: {}
+      containers:
+        - name: webapp
+          securityContext: {}
+          image: "registry.gitlab.com/cyberslot/ci_cd-crash-course:latest"
+          imagePullPolicy: IfNotPresent
+          env: []
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+      imagePullSecrets:
+        - name: gl-regcred
