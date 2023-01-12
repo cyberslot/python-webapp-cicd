@@ -70,11 +70,11 @@ resources:
     memory: 128Mi
 
 ## --------- EXPERIMENTAL --------- ##
-imageCredentials:
-  registry: registry.gitlab.com
-  username: cyberslot
-  password: iyjBJkxcUv8GhKQUewDj
-  # email: cyberslot@gmail.com
+# imageCredentials:
+# registry: registry.gitlab.com
+# username: cyberslot
+# password: iyjBJkxcUv8GhKQUewDj
+## email: cyberslot@gmail.com
 ## -------------------------------- ##
 
 # -- Any secrets needed to pull image
