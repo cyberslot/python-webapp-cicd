@@ -71,7 +71,7 @@ resources:
 
 ## --------- EXPERIMENTAL --------- ##
 imageCredentials:
-  registry: registry.gitlab.com/cyberslot/ci_cd-crash-course
+  registry: registry.gitlab.com
   username: cyberslot
   password: iyjBJkxcUv8GhKQUewDj
   email: cyberslot@gmail.com
