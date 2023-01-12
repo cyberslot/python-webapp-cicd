@@ -113,11 +113,7 @@ deploy:
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
     # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
-    - helm install --debug webapp -n webapp ci_cd-crash-course/webapp \
-      --set imagePullSecret.registryURL="registry.gitlab.com" \
-      --set imagePullSecret.secretName="gl-regcred" \
-      --set imagePullSecret.username="cyberslot" \
-      --set imagePullSecret.password="iyjBJkxcUv8GhKQUewDj"
+    - helm install --debug webapp -n webapp ci_cd-crash-course/webapp --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="registry-pullsecret" --set imagePullSecret.username="user" --set imagePullSecret.password="password"
     # - helm un -n webapp webapp
     ## ------ Debug section ------ ##
     # - helm ls -a
