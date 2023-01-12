@@ -95,7 +95,7 @@ deploy:
     entrypoint: [""]
   script:
     - kubectl config get-contexts
-    - kubectl config use-context cyberslot/ci_cd-crash-course/repository:k8s-agent-cicd
+    - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
     # - kubectl get pods
     - kubectl create secret docker-registry gl-regcred -n webapp --docker-server=registry.gitlab.com --docker-username=cyberslot --docker-password=$DEPLOY_TOKEN
     - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
