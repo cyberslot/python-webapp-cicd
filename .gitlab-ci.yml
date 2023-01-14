@@ -102,7 +102,7 @@ deploy:
     - kubectl create secret docker-registry gl-regcred -n webapp --docker-server=registry.gitlab.com --docker-username=cyberslot --docker-password=$DEPLOY_TOKEN
     - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
     ## Only in case when port 5000 is not explicitly expose on cluster (KinD) level (in kind-multinode.yaml)
-    - kubectl port-forward $(kubectl get po -n webapp|grep webapp|awk '{ print $1 }') -n webapp 5000:5000
+    - kubectl port-forward $(kubectl get po -n webapp|grep webapp|awk '{ print $1 }') -n webapp 5000:5000 &
     ## Removal
     # - kubectl delete -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
     # - kubectl delete secret gl-regcred -n webapp
