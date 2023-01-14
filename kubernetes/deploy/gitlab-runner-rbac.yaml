@@ -13,12 +13,12 @@ rules:
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
     verbs: ["get", "watch", "list", "create", "update", "delete"]
-  # - apiGroups: ["rbac.authorization.k8s.io"]
-  #   resources: ["clusterroles"]
-  #   verbs: ["get", "watch", "list"]
-  # - apiGroups: ["rbac.authorization.k8s.io"]
-  #   resources: ["clusterrolebindings"]
-  #   verbs: ["get", "watch", "list"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterroles"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterrolebindings"]
+    verbs: ["get", "watch", "list"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1

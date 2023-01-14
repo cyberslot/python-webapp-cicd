@@ -67,6 +67,7 @@ stages:
   script:
     - 'curl --request POST --user gitlab-ci-token:$CI_JOB_TOKEN --form "chart=@kubernetes/deploy//helm/webapp-1.0.0.tgz" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/api/stable/charts"'
 
+### - RBAC (NOT CONFIGURED)
 .rbac:
   stage: pre-deploy
   image:
@@ -89,7 +90,7 @@ deploy:
   #     . script.sh"
 
   ### Kubernetes part
-  ### - Manifests (NOT CONFIGURED!)
+  ### - Manifests
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""]
@@ -97,8 +98,11 @@ deploy:
     - kubectl config get-contexts
     - kubectl config use-context cyberslot/CI_CD-Crash-Course:k8s-agent-cicd
     # - kubectl get pods
+    - kubectl create ns webapp
     - kubectl create secret docker-registry gl-regcred -n webapp --docker-server=registry.gitlab.com --docker-username=cyberslot --docker-password=$DEPLOY_TOKEN
     - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
+    ## Only in case when port 5000 is not explicitly expose on cluster (KinD) level (in kind-multinode.yaml)
+    - kubectl port-forward $(kubectl get po -n webapp|grep webapp|awk '{ print $1 }') 5000:5000
     ## Removal
     # - kubectl delete -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
     # - kubectl delete secret gl-regcred -n webapp
@@ -119,6 +123,7 @@ deploy:
   #   - helm repo up ci_cd-crash-course
   # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
   # - helm install --debug webapp -n webapp ci_cd-crash-course/webapp --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN
+  ## Remove release
   # - helm un -n webapp webapp
   ## ------ Debug section ------ ##
   # - helm ls -a
