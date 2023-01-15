@@ -10,7 +10,7 @@ stages:
   - pre-deploy
   - deploy
 
-run_tests:
+.run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
@@ -39,7 +39,7 @@ run_tests:
 
 ### Kubernetes part
 ### - Kaniko build
-build:
+.build:
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
@@ -55,14 +55,14 @@ build:
   ## --------------------------------------------- ##
 
 ### - Helm chart
-package:
+.package:
   stage: helm-package
   image: alpine/helm:3.10.2
   script:
     - cd kubernetes/deploy/helm
     - helm package webapp
 
-publish:
+.publish:
   stage: publish
   image: curlimages/curl:latest
   script:
@@ -132,6 +132,9 @@ deploy:
   # - helm template --validate webapp -n webapp --dry-run ci_cd-crash-course/webapp
   ## --------------------------- ##
   # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade (NOT TESTED)
+  environment:
+    name: staging
+    url: https://localhost:5000
 
   ## --------- EXPERIMENTAL --------- ##
   # - helm repo add benc-uk https://benc-uk.github.io/helm-charts
