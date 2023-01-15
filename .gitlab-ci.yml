@@ -134,7 +134,7 @@ deploy:
   # - helm upgrade -i webapp --namespace webapp --dry-run ci_cd-crash-course/webapp # Optional use --debug after upgrade (NOT TESTED)
   environment:
     name: staging
-    url: https://localhost:5000
+    url: http://127.0.0.1:5000
 
   ## --------- EXPERIMENTAL --------- ##
   # - helm repo add benc-uk https://benc-uk.github.io/helm-charts
