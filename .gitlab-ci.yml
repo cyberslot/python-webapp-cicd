@@ -1,6 +1,6 @@
-variables:
-  IMAGE_NAME: cyberslot/app-repo
-  IMAGE_TAG: python-app-1.0
+include:
+  - project: "cyberslot-test-group/pipeline-templates"
+    file: "Auto-DevOps.gitlab-ci.yml"
 
 stages:
   - test
@@ -10,7 +10,7 @@ stages:
   - pre-deploy
   - deploy
 
-run_tests:
+.run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
@@ -19,7 +19,7 @@ run_tests:
   script:
     - make test
 
-build:
+.build:
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:v1.9.1-debug
@@ -57,7 +57,7 @@ publish:
   script:
     - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/gitlab-runner-rbac.yaml
 
-deploy:
+.deploy:
   stage: deploy
   ### - Manifests
   # image:
