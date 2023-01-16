@@ -9,9 +9,9 @@ stages:
   - publish
   - pre-deploy
   - deploy
-  - review
+  # - review
 
-.run_tests:
+run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
