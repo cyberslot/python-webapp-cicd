@@ -9,9 +9,8 @@ stages:
   - publish
   - pre-deploy
   - deploy
-  # - review
 
-run_tests:
+.run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
@@ -36,14 +35,14 @@ run_tests:
   ## --------------------------------------------- ##
 
 ### - Helm chart
-package:
+.package:
   stage: helm-package
   image: alpine/helm:3.10.2
   script:
     - cd kubernetes/deploy/helm
     - helm package webapp
 
-publish:
+.publish:
   stage: publish
   image: curlimages/curl:latest
   script:
