@@ -9,6 +9,7 @@ stages:
   - publish
   - pre-deploy
   - deploy
+  - review
 
 .run_tests:
   stage: test
