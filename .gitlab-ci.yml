@@ -1,4 +1,4 @@
-.include:
+include:
   - project: "cyberslot-test-group/infra/KinD/pipeline-templates"
     file: "Auto-DevOps.gitlab-ci.yml"
 
