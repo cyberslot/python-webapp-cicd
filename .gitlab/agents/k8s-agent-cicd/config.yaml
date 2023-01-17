@@ -1,3 +1,27 @@
 ci_access:
   projects:
     - id: cyberslot/ci_cd-crash-course
+
+gitops:
+  manifest_projects:
+    # - id: cyberslot-test-group/infra/KinD/GitOps/cluster-integration
+    - id: cyberslot/ci_cd-crash-course
+      ref: # either `branch`, `tag` or `commit` can be specified
+        # branch: prod
+        branch: main
+        # commit: <mysha>
+        # tag: v1.0
+      default_namespace: default
+      paths:
+        # Read all YAML files from this directory.
+        - glob: "kubernetes/deploy/manifests/webapp/*.yaml"
+        # # Read all .yaml files from team2/apps and all subdirectories.
+        # - glob: "/team2/apps/**/*.yaml"
+        #   # If 'paths' is not specified or is an empty list, the configuration below is used.
+        # - glob: "/**/*.{yaml,yml,json}"
+      reconcile_timeout: 3600s
+      dry_run_strategy: none
+      prune: true
+      prune_timeout: 3600s
+      prune_propagation_policy: foreground
+      inventory_policy: must_match
