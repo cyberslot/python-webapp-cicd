@@ -1,5 +1,5 @@
 include:
-  - project: "cyberslot-test-group/pipeline-templates"
+  - project: "cyberslot-test-group/infra/KinD/pipeline-templates"
     file: "Auto-DevOps.gitlab-ci.yml"
 
 stages:
