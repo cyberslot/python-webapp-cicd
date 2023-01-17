@@ -1,4 +1,4 @@
-include:
+.include:
   - project: "cyberslot-test-group/infra/KinD/pipeline-templates"
     file: "Auto-DevOps.gitlab-ci.yml"
 
@@ -35,14 +35,14 @@ stages:
   ## --------------------------------------------- ##
 
 ### - Helm chart
-package:
+.package:
   stage: helm-package
   image: alpine/helm:3.10.2
   script:
     - cd kubernetes/deploy/helm
     - helm package webapp
 
-publish:
+.publish:
   stage: publish
   image: curlimages/curl:latest
   script:
@@ -90,9 +90,9 @@ deploy:
     - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
-    - helm install webapp ci_cd-crash-course/webapp -n webapp --create-namespace --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN # --wait
-  ## Remove release
-  # - helm un -n webapp webapp
+    # - helm install webapp ci_cd-crash-course/webapp -n webapp --create-namespace --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN # --wait
+    ## Remove release
+    - helm un -n webapp webapp
   ## ------ Debug section ------ ##
   # - helm ls -a
   # - helm ls --all-namespaces
