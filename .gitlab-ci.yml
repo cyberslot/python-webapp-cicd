@@ -35,14 +35,14 @@ stages:
   ## --------------------------------------------- ##
 
 ### - Helm chart
-.package:
+package:
   stage: helm-package
   image: alpine/helm:3.10.2
   script:
     - cd kubernetes/deploy/helm
     - helm package webapp
 
-.publish:
+publish:
   stage: publish
   image: curlimages/curl:latest
   script:
@@ -57,7 +57,7 @@ stages:
   script:
     - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/gitlab-runner-rbac.yaml
 
-.deploy:
+deploy:
   stage: deploy
   ### - Manifests
   # image:

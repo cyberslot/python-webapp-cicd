@@ -1,6 +1,6 @@
-# ci_access:
-#   projects:
-#     - id: cyberslot/ci_cd-crash-course
+ci_access:
+  projects:
+    - id: cyberslot/ci_cd-crash-course
 
 gitops:
   manifest_projects:
