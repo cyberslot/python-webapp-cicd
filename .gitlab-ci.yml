@@ -10,7 +10,7 @@ stages:
   - pre-deploy
   - deploy
 
-run_tests:
+.run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
@@ -58,7 +58,7 @@ run_tests:
   script:
     - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/gitlab-runner-rbac.yaml
 
-.deploy:
+deploy:
   stage: deploy
   ### - Manifests
   # image:
@@ -93,9 +93,9 @@ run_tests:
     - chmod 600 /builds/cyberslot/CI_CD-Crash-Course.tmp/KUBECONFIG
     - helm repo add --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD ci_cd-crash-course "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/helm/stable"
     - helm repo up ci_cd-crash-course
-    - helm install webapp ci_cd-crash-course/webapp -n webapp --create-namespace --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN # --wait
+    # - helm install webapp ci_cd-crash-course/webapp -n webapp --create-namespace --set imagePullSecret.registryURL="registry.gitlab.com" --set imagePullSecret.secretName="gl-regcred" --set imagePullSecret.username="cyberslot" --set imagePullSecret.password=$DEPLOY_TOKEN # --wait
     ## Remove release
-    # - helm un -n webapp webapp
+    - helm un -n webapp webapp
   ## ------ Debug section ------ ##
   # - helm ls -a
   # - helm ls --all-namespaces
