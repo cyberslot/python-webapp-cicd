@@ -14,13 +14,10 @@ run_tests:
   stage: test
   image: python:3.9-slim-buster
   ## image: python:3.12.0a3-slim-bullseye
-  # before_script:
-  #   - apt update && apt install make
+  before_script:
+    - apt update && apt install make
   script:
-    # - make test
-    - echo $CI_REGISTRY_IMAGE
-    - echo $CI_COMMIT_TAG
-    - echo $CI_COMMIT_SHORT_SHA
+    - make test
 
 .build:
   stage: build
@@ -74,8 +71,10 @@ run_tests:
   # - kubectl create ns webapp
   # - kubectl create secret docker-registry gl-regcred -n webapp --docker-server=registry.gitlab.com --docker-username=cyberslot --docker-password=$DEPLOY_TOKEN
   # - kubectl apply -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
-  ## In case when port 5000 is not explicitly expose on cluster (KinD) level (in kind-multinode.yaml), execute it on the host:
-  # kubectl port-forward $(kubectl get po -n webapp|grep webapp|awk '{ print $1 }') -n webapp 5000:5000 &
+  ## In case when port 5000 is not explicitly expose on the cluster (KinD) level (in kind-multinode.yaml), execute it on the host:
+  ## kubectl port-forward -n webapp service/webapp 5000:80 &  (Recommended)
+  ##  OR
+  ## kubectl port-forward $(kubectl get po -n webapp|grep webapp|awk '{ print $1 }') -n webapp 5000:5000 &
   ## Removal
   # - kubectl delete -f ${CI_PROJECT_DIR}/kubernetes/deploy/manifests/webapp/aio.yaml
   # - kubectl delete secret gl-regcred -n webapp
