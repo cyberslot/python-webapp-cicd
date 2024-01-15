@@ -19,6 +19,17 @@ stages:
           - script: |
               apt update && apt install make
               make test
+          - task: PowerShell@2
+            displayName: "Run PSRules Script"
+            inputs:
+              ## Inline PSRules script
+              # targetType: "inline"
+              # script: |
+              #   # Add PSRules script here
+              ## Referenced PSRules script
+              targetType: "filePath"
+              filePath: "path/to/psRulesScript.ps1"
+
   - stage: Deploy
     jobs:
       - job: DeployToAppService

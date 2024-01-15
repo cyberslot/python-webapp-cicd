@@ -23,3 +23,14 @@ steps:
   - script: |
       az login --service-principal --username $(CLIENT_ID) --password $(CLIENT_SECRET) --tenant $(TENANT_ID)
       az deployment sub create --location $(deploymentDefaultLocation) --template-file $(System.DefaultWorkingDirectory)/path/to/webapp.bicep --parameters $(System.DefaultWorkingDirectory)/path/to/params.json
+
+  - task: PowerShell@2
+    displayName: "Run PSRules Script"
+    inputs:
+      ## Inline PSRules script
+      # targetType: "inline"
+      # script: |
+      #   # Add PSRules script here
+      ## Referenced PSRules script
+      targetType: "filePath"
+      filePath: "path/to/psRulesScript.ps1"
