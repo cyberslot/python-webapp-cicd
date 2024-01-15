@@ -1,0 +1,68 @@
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  - name: deploymentDefaultLocation
+    value: west-europe
+  - name: vmImage
+    value: ubuntu-latest
+
+stages:
+  - stage: Test
+    jobs:
+      - job: RunTests
+        displayName: "Run Tests"
+        pool: $(vmImage)
+        steps:
+          - script: |
+              apt update && apt install make
+              make test
+  - stage: Deploy
+    jobs:
+      - job: DeployToAppService
+        steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              connectedServiceName: $(ServiceConnectionName)
+              deploymentName: $(Build.BuildNumber)
+              location: $(deploymentDefaultLocation)
+              resourceGroupName: $(ResourceGroupName)
+              csmFile: kubernetes/deploy/webapp.bicep
+              overrideParameters: >
+                -environmentType $(EnvironmentType)
+
+  ### - Kubernetes part
+  # - stage: Build
+  #   jobs:
+  #     - job: BuildImage
+  #       displayName: "Build Docker Image"
+  #       pool: $(vmImage)
+  #       steps:
+  #         - task: Docker@2
+  #           displayName: "Build and Push"
+  #           inputs:
+  #             command: /kaniko/executor
+  #               --context "${CI_PROJECT_DIR}"
+  #               --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+  #               --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+  #             containerRegistry: $(ContainerRegistry)
+  #             repository: $(Repository)
+  #             tags: "$(Build.BuildId)"
+
+  # - stage: Deploy
+  #   jobs:
+  #     - job: DeployToKubernetes
+  #       displayName: "Deploy to Kubernetes"
+  #       pool: $(vmImage)
+  #       steps:
+  #         - task: KubernetesManifest@0
+  #           displayName: "Apply Manifests"
+  #           inputs:
+  #             action: "apply"
+  #             kubernetesServiceConnection: $(kubernetesServiceConnection)
+  #             manifests: |
+  #               $(System.DefaultWorkingDirectory)/kubernetes/deploy/manifests/webapp/aio.yaml
+  #           env:
+  #             KUBECONFIG: $(KUBECONFIG)
