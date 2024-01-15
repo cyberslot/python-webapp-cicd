@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - name: deploymentDefaultLocation
+    value: west-europe
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.x"
+      addToPath: true
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install azure-cli
+
+  - script: |
+      az login --service-principal --username $(CLIENT_ID) --password $(CLIENT_SECRET) --tenant $(TENANT_ID)
+      az deployment sub create --location $(deploymentDefaultLocation) --template-file $(System.DefaultWorkingDirectory)/path/to/webapp.bicep --parameters $(System.DefaultWorkingDirectory)/path/to/params.json
